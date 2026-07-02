@@ -96,9 +96,9 @@
     nav.links{
       position:fixed; top:64px; left:0; right:0; background:var(--white);
       flex-direction:column; gap:0; padding:8px 24px; border-bottom:1px solid var(--line);
-      transform:translateY(-110%); transition:transform .25s ease; box-shadow:var(--shadow);
+      transform:translateY(-110%); visibility:hidden; transition:transform .25s ease, visibility 0s linear .25s; box-shadow:var(--shadow);
     }
-    nav.links.open{transform:translateY(0);}
+    nav.links.open{transform:translateY(0); visibility:visible; transition:transform .25s ease, visibility 0s linear 0s;}
     nav.links a{padding:14px 0; border-bottom:1px solid var(--line); width:100%;}
     .burger{display:block;}
     .nav-cta.desktop-only{display:none;}
