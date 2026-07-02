@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Inn — El Chaltén, Santa Cruz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders:wght@500;600;700;800&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/jpeg" href="images/logo_circular.jpg">
+<style>
+  :root{
+    --ink:#2B2A24;        /* texto principal, casi negro cálido */
+    --stone:#F3EDE2;      /* crema cálido de paredes */
+    --stone-2:#EAE1D2;
+    --slate:#6E6656;      /* taupe cálido para texto secundario */
+    --berry:#BF6539;      /* terracota, como las macetas */
+    --berry-dark:#9C4F2B;
+    --wood:#A9794F;       /* madera */
+    --white:#FBF8F2;
+    --deep:#202B2F;       /* granito oscuro, como antes */
+    --deep-2:#171F22;
+    --sage:#8CA087;       /* verde salvia, como el sillón */
+    --line: rgba(43,42,36,0.14);
+    --shadow: 0 12px 30px rgba(30,40,35,0.12);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Karla', sans-serif;
+    color:var(--ink);
+    background:var(--stone);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Big Shoulders', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    line-height:0.95;
+    margin:0;
+  }
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+  .eyebrow{
+    font-family:'Big Shoulders', sans-serif;
+    font-weight:700;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    font-size:13px;
+    color:var(--berry);
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation:none !important; transition:none !important;}
+  }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(251,248,242,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1120px; margin:0 auto; padding:14px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo{
+    display:flex; align-items:center;
+  }
+  .logo img{height:44px; width:auto; display:block; border-radius:6px;}
+  .logo span{color:var(--berry);}
+  nav.links{display:flex; gap:28px; font-weight:600; font-size:14px; letter-spacing:0.02em; text-transform:uppercase;}
+  nav.links a{padding:6px 0; border-bottom:2px solid transparent;}
+  nav.links a:hover{border-color:var(--berry);}
+  .nav-cta{
+    background:var(--berry); color:var(--white); padding:10px 18px;
+    border-radius:2px; font-weight:700; font-size:13px; letter-spacing:0.04em; text-transform:uppercase;
+    white-space:nowrap;
+  }
+  .nav-cta:hover{background:var(--berry-dark);}
+  .lang-switch{display:flex; align-items:center; gap:4px; font-size:13px; font-weight:700; letter-spacing:0.02em;}
+  .lang-switch a{padding:4px 7px; border-radius:2px; color:var(--slate);}
+  .lang-switch a.active{color:var(--white); background:var(--berry);}
+  .lang-switch span{color:var(--line);}
+  .burger{display:none; background:none; border:none; cursor:pointer; padding:6px;}
+  .burger svg{width:26px; height:26px;}
+
+  @media (max-width:860px){
+    nav.links{
+      position:fixed; top:64px; left:0; right:0; background:var(--white);
+      flex-direction:column; gap:0; padding:8px 24px; border-bottom:1px solid var(--line);
+      transform:translateY(-110%); transition:transform .25s ease; box-shadow:var(--shadow);
+    }
+    nav.links.open{transform:translateY(0);}
+    nav.links a{padding:14px 0; border-bottom:1px solid var(--line); width:100%;}
+    .burger{display:block;}
+    .nav-cta.desktop-only{display:none;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; overflow:hidden;
+    background:var(--deep); color:var(--white);
+    padding:120px 24px 90px;
+  }
+  .hero-inner{max-width:1120px; margin:0 auto; position:relative; z-index:2;}
+  .hero .hero-bg{
+    position:absolute; inset:0; width:100%; height:100%; z-index:0;
+  }
+  .hero .hero-bg img{
+    width:100%; height:100%; object-fit:cover; object-position:center 30%;
+    opacity:0.55; filter:saturate(0.85);
+  }
+  .hero .hero-bg::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(32,43,47,0.75) 0%, rgba(32,43,47,0.55) 40%, rgba(32,43,47,0.92) 100%);
+  }
+  .hero svg.contours{
+    position:absolute; inset:0; width:100%; height:100%;
+    opacity:0.35; z-index:1;
+  }
+  .hero-eyebrow{color:#E7C39A; font-family:'Big Shoulders'; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; font-size:13px;}
+  .hero-logo-plaque{
+    display:inline-block; background:var(--white); padding:22px 30px;
+    border-radius:4px; margin-top:18px; box-shadow:0 18px 40px rgba(0,0,0,0.35);
+  }
+  .hero-logo-plaque img{display:block; height:auto; width:190px; max-width:100%;}
+  .hero h1{
+    font-size:clamp(56px, 11vw, 128px);
+    font-weight:800;
+    margin-top:14px;
+    color:var(--white);
+  }
+  .hero h1 em{font-style:normal; color:var(--wood);}
+  .hero p.tag{
+    max-width:520px; margin-top:22px; font-size:19px; line-height:1.5; color:#D9D2C0;
+  }
+  .hero-meta{
+    display:flex; flex-wrap:wrap; gap:28px; margin-top:40px; font-size:14px; color:#C9C2AC;
+  }
+  .hero-meta strong{display:block; color:var(--white); font-weight:600;}
+  .hero-actions{margin-top:38px; display:flex; gap:16px; flex-wrap:wrap;}
+  .btn{
+    display:inline-block; padding:15px 28px; border-radius:2px;
+    font-weight:700; font-size:14px; letter-spacing:0.03em; text-transform:uppercase;
+    border:1px solid transparent; cursor:pointer;
+  }
+  .btn-primary{background:var(--berry); color:var(--white);}
+  .btn-primary:hover{background:var(--berry-dark);}
+  .btn-ghost{border-color:rgba(255,255,255,0.4); color:var(--white);}
+  .btn-ghost:hover{border-color:var(--white);}
+
+  /* ---------- CONTOUR DIVIDER (signature) ---------- */
+  .contour-divider{display:block; width:100%; height:44px;}
+  .contour-divider svg{width:100%; height:100%; display:block;}
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{padding:90px 0;}
+  .section-head{max-width:640px; margin-bottom:56px;}
+  .section-head h2{font-size:clamp(34px,5vw,52px); font-weight:700; margin-top:10px;}
+  .section-head p{margin-top:16px; font-size:16px; color:var(--slate); line-height:1.6;}
+
+  /* ---------- ROOMS ---------- */
+  .rooms-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:28px;}
+  @media (max-width:760px){.rooms-grid{grid-template-columns:1fr;}}
+  .room-card{
+    background:var(--white); border:1px solid var(--line); border-radius:2px;
+    overflow:hidden; display:flex; flex-direction:column; box-shadow:var(--shadow);
+  }
+  .room-photo{
+    position:relative; height:190px; background:var(--slate);
+    display:flex; align-items:flex-end; padding:14px 16px;
+    overflow:hidden;
+  }
+  .room-photo img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;
+  }
+  .room-photo.has-photo::before{
+    content:""; position:absolute; inset:0; z-index:1;
+    background:linear-gradient(180deg, rgba(32,43,47,0) 55%, rgba(32,43,47,0.55) 100%);
+  }
+  .room-photo svg{position:absolute; inset:0; width:100%; height:100%;}
+  .room-photo .cap{
+    position:relative; z-index:2; background:rgba(32,43,47,0.55); color:var(--white);
+    font-size:12px; font-weight:600; letter-spacing:0.03em; padding:5px 10px; border-radius:2px;
+  }
+  .room-photo .cap.photo-tag{background:rgba(32,43,47,0.65);}
+  .room-body{padding:22px 24px 26px;}
+  .room-top{display:flex; justify-content:space-between; align-items:flex-start; gap:12px;}
+  .room-title{font-family:'Big Shoulders'; font-weight:700; font-size:24px; text-transform:uppercase;}
+  .room-count{
+    font-size:12px; font-weight:700; color:var(--berry); border:1px solid var(--berry);
+    padding:3px 9px; border-radius:20px; white-space:nowrap; letter-spacing:0.02em;
+  }
+  .room-specs{margin:14px 0 0; padding:0; list-style:none; font-size:14px; color:var(--slate); line-height:1.9;}
+  .room-specs li{padding-left:18px; position:relative;}
+  .room-specs li::before{content:"—"; position:absolute; left:0; color:var(--wood);}
+  .room-desc{margin-top:14px; font-size:14px; line-height:1.6; color:var(--ink);}
+  .room-price{
+    margin-top:16px; padding-top:14px; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .room-price .label{font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--slate); font-weight:600;}
+  .room-price .value{font-family:'Big Shoulders'; font-weight:700; font-size:15px; color:var(--berry);}
+
+  .room-note{
+    margin-top:40px; font-size:13px; color:var(--slate); border-left:3px solid var(--wood);
+    padding:10px 16px; background:var(--stone-2);
+  }
+
+  /* ---------- GALERIA ---------- */
+  .gallery-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:150px; gap:14px;
+  }
+  .gallery-grid a{display:block; overflow:hidden; border-radius:2px; position:relative;}
+  .gallery-grid img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .35s ease;}
+  .gallery-grid a:hover img{transform:scale(1.06);}
+  .gallery-grid .tall{grid-row:span 2;}
+  .gallery-grid .wide{grid-column:span 2;}
+  @media (max-width:860px){
+    .gallery-grid{grid-template-columns:repeat(2,1fr); grid-auto-rows:140px;}
+    .gallery-grid .wide{grid-column:span 2;}
+  }
+
+  /* ---------- SERVICIOS ---------- */
+  .services{background:var(--deep); color:var(--white);}
+  .services .section-head p{color:#C9C2AC;}
+  .services .eyebrow{color:#E7C39A;}
+  .services-layout{display:grid; grid-template-columns:0.9fr 1.1fr; gap:48px; align-items:center;}
+  @media (max-width:860px){.services-layout{grid-template-columns:1fr;}}
+  .services-photo{border-radius:2px; overflow:hidden; box-shadow:0 20px 40px rgba(0,0,0,0.35);}
+  .services-photo img{width:100%; height:100%; max-height:460px; object-fit:cover; display:block;}
+  .service-grid{display:grid; grid-template-columns:repeat(2, 1fr); gap:20px;}
+  @media (max-width:520px){.service-grid{grid-template-columns:1fr;}}
+  .service-card{border:1px solid rgba(255,255,255,0.18); padding:22px 20px; border-radius:2px;}
+  .service-card svg{width:28px; height:28px; color:var(--wood); margin-bottom:14px;}
+  .service-card h3{font-size:16px; font-family:'Karla'; text-transform:none; font-weight:700; letter-spacing:0;}
+  .service-card p{margin-top:8px; font-size:13.5px; color:#C9C2AC; line-height:1.5;}
+
+  /* ---------- UBICACION ---------- */
+  .location{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;}
+  @media (max-width:860px){.location{grid-template-columns:1fr;}}
+  .location-info h2{font-size:clamp(32px,5vw,46px);}
+  .location-info p{margin-top:16px; color:var(--slate); line-height:1.6; font-size:15.5px;}
+  .location-detail{margin-top:26px; display:flex; flex-direction:column; gap:10px; font-size:15px;}
+  .location-detail strong{display:inline-block; min-width:110px; color:var(--berry); font-weight:700;}
+  .map-frame{border:1px solid var(--line); border-radius:2px; overflow:hidden; box-shadow:var(--shadow);}
+  .map-frame iframe{width:100%; height:340px; border:0; display:block;}
+
+  /* ---------- RESERVAS ---------- */
+  .reservas{background:var(--stone-2);}
+  .form-wrap{
+    background:var(--white); border:1px solid var(--line); border-radius:2px;
+    padding:40px; box-shadow:var(--shadow);
+  }
+  @media (max-width:600px){.form-wrap{padding:26px;}}
+  .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  @media (max-width:600px){.form-grid{grid-template-columns:1fr;}}
+  .field{display:flex; flex-direction:column; gap:6px;}
+  .field.full{grid-column:1 / -1;}
+  .field label{font-size:12.5px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:var(--slate);}
+  .field input, .field select, .field textarea{
+    font-family:'Karla'; font-size:15px; padding:12px 14px; border:1px solid var(--line);
+    border-radius:2px; background:var(--white); color:var(--ink);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:2px solid var(--berry); outline-offset:1px; border-color:var(--berry);
+  }
+  .form-actions{margin-top:26px; display:flex; gap:14px; flex-wrap:wrap; align-items:center;}
+  .form-hint{font-size:13px; color:var(--slate); margin-top:16px;}
+  .form-hint a{color:var(--berry); font-weight:700; border-bottom:1px solid var(--berry);}
+
+  /* ---------- CONTACTO / FOOTER ---------- */
+  footer{background:var(--deep); color:#C9C2AC; padding:60px 0 30px;}
+  .footer-grid{display:grid; grid-template-columns:2fr 1fr 1fr; gap:36px;}
+  @media (max-width:760px){.footer-grid{grid-template-columns:1fr; gap:28px;}}
+  .footer-logo img{height:52px; width:auto; border-radius:6px;}
+  .footer-logo span{color:var(--wood);}
+  footer h4{font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--wood); margin-bottom:14px; font-weight:700;}
+  footer p, footer a{font-size:14px; line-height:1.7;}
+  footer a:hover{color:var(--white);}
+  .footer-bottom{
+    margin-top:50px; padding-top:22px; border-top:1px solid rgba(255,255,255,0.12);
+    font-size:12.5px; color:#8FA087; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+
+  /* whatsapp float */
+  .wa-float{
+    position:fixed; bottom:22px; right:22px; z-index:60;
+    background:#2E7D5B; color:#fff; width:56px; height:56px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(0,0,0,0.25);
+  }
+  .wa-float svg{width:28px; height:28px;}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="#inicio"><img src="images/logo_circular.jpg" alt="Simple Inn"></a>
+    <nav class="links" id="navLinks">
+      <a href="#inicio">Home</a>
+      <a href="#habitaciones">Rooms</a>
+      <a href="#galeria">Gallery</a>
+      <a href="#servicios">Amenities</a>
+      <a href="#ubicacion">Location</a>
+      <a href="#reservas">Book</a>
+      <a href="#contacto">Contact</a>
+    </nav>
+    <a class="nav-cta desktop-only" href="#reservas">Check availability</a>
+    <div class="lang-switch">
+      <a href="index.html">ES</a><span>/</span><a href="index-en.html" class="active">EN</a>
+    </div>
+    <button class="burger" id="burgerBtn" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"><img src="images/frente.jpg" alt="Frente de Simple Inn en Güemes 17, El Chaltén"></div>
+  <svg class="contours" viewBox="0 0 1200 700" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" stroke="#F3EDE2" stroke-width="1">
+      <path d="M-50,120 C200,80 400,160 650,110 C900,60 1050,140 1250,90" opacity="0.5"/>
+      <path d="M-50,180 C220,140 420,220 660,170 C900,120 1060,200 1250,150" opacity="0.4"/>
+      <path d="M-50,240 C240,200 440,280 670,230 C900,180 1070,260 1250,210" opacity="0.3"/>
+      <path d="M-50,300 C260,260 460,340 680,290 C900,240 1080,320 1250,270" opacity="0.2"/>
+    </g>
+  </svg>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">El Chaltén · Santa Cruz · Patagonia Argentina</div>
+    <div class="hero-logo-plaque"><img src="images/logo.jpg" alt="Simple Inn, El Chaltén"></div>
+    <p class="tag">A simple place to come back to after the mountain. Comfortable rooms and a private apartment, steps from the town center, with the mountain as your backdrop.</p>
+    <div class="hero-meta">
+      <div><strong>Address</strong>Güemes 17, El Chaltén</div>
+      <div><strong>WhatsApp</strong>+54 9 2966 630854</div>
+      <div><strong>Email</strong>simpleinn.elchalten@gmail.com</div>
+    </div>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#reservas">Check availability</a>
+      <a class="btn btn-ghost" href="#habitaciones">View rooms</a>
+    </div>
+  </div>
+</section>
+
+<div class="contour-divider">
+  <svg viewBox="0 0 1200 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,10 C200,30 400,0 600,18 C800,34 1000,4 1200,20" fill="none" stroke="#6E6656" stroke-width="1.4" opacity="0.5"/>
+  </svg>
+</div>
+
+<!-- ============ HABITACIONES ============ -->
+<section id="habitaciones">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Accommodation</div>
+      <h2>Rooms &amp; apartment</h2>
+      <p>Eight rooms with private bathroom, designed for different kinds of groups, plus an apartment with its own kitchen for those staying a few extra days.</p>
+    </div>
+
+    <div class="rooms-grid">
+
+      <!-- Economy Double -->
+      <article class="room-card">
+        <div class="room-photo has-photo">
+          <img src="images/hab_economica.jpg" alt="Economy Double Room at Simple Inn">
+          <span class="cap photo-tag">Economy Double</span>
+        </div>
+        <div class="room-body">
+          <div class="room-top">
+            <div class="room-title">Economy Double</div>
+            <div class="room-count">x2 available</div>
+          </div>
+          <ul class="room-specs">
+            <li>Double bed</li>
+            <li>Private bathroom</li>
+            <li>Up to 2 guests</li>
+          </ul>
+          <p class="room-desc">The essentials, done comfortably: ideal for those who just need a good place to rest between hikes.</p>
+          <div class="room-price"><span class="label">Rate</span><span class="value">On request</span></div>
+        </div>
+      </article>
+
+      <!-- Twin Room -->
+      <article class="room-card">
+        <div class="room-photo has-photo">
+          <img src="images/doble_twin.jpg" alt="Twin Room at Simple Inn">
+          <span class="cap photo-tag">Twin Room</span>
+        </div>
+        <div class="room-body">
+          <div class="room-top">
+            <div class="room-title">Twin Room</div>
+            <div class="room-count">x2 available</div>
+          </div>
+          <ul class="room-specs">
+            <li>2 single beds</li>
+            <li>Private bathroom</li>
+            <li>Up to 2 guests</li>
+          </ul>
+          <p class="room-desc">Designed for friends or travel companions who prefer separate beds.</p>
+          <div class="room-price"><span class="label">Rate</span><span class="value">On request</span></div>
+        </div>
+      </article>
+
+      <!-- Standard Double -->
+      <article class="room-card">
+        <div class="room-photo has-photo">
+          <img src="images/doble.jpg" alt="Standard Double Room at Simple Inn">
+          <span class="cap photo-tag">Standard Double</span>
+        </div>
+        <div class="room-body">
+          <div class="room-top">
+            <div class="room-title">Standard Double</div>
+            <div class="room-count">x2 available</div>
+          </div>
+          <ul class="room-specs">
+            <li>Double bed</li>
+            <li>Private bathroom</li>
+            <li>Up to 2 guests</li>
+          </ul>
+          <p class="room-desc">A bit more space and comfort, while keeping the same simplicity as always.</p>
+          <div class="room-price"><span class="label">Rate</span><span class="value">On request</span></div>
+        </div>
+      </article>
+
+      <!-- Triple -->
+      <article class="room-card">
+        <div class="room-photo has-photo">
+          <img src="images/triple_1.jpg" alt="Triple Room at Simple Inn">
+          <span class="cap photo-tag">Triple</span>
+        </div>
+        <div class="room-body">
+          <div class="room-top">
+            <div class="room-title">Triple</div>
+            <div class="room-count">x2 available</div>
+          </div>
+          <ul class="room-specs">
+            <li>1 double bed + 1 single bed</li>
+            <li>Private bathroom</li>
+            <li>Up to 3 guests</li>
+          </ul>
+          <p class="room-desc">The option for small groups or families who want to stay all together in the same room.</p>
+          <div class="room-price"><span class="label">Rate</span><span class="value">On request</span></div>
+        </div>
+      </article>
+
+      <!-- Apartment -->
+      <article class="room-card" style="grid-column:1 / -1;">
+        <div style="display:grid; grid-template-columns:280px 1fr;">
+          <div class="room-photo" style="height:100%; min-height:220px; background:var(--berry);">
+            <svg viewBox="0 0 280 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0,220 L0,160 L60,110 L110,150 L170,90 L230,145 L280,110 L280,220 Z" fill="#9C4F2B"/>
+            </svg>
+            <span class="cap">Photo coming soon</span>
+          </div>
+          <div class="room-body">
+            <div class="room-top">
+              <div class="room-title">Apartment</div>
+              <div class="room-count">x1 available</div>
+            </div>
+            <ul class="room-specs">
+              <li>2 bedrooms: 1 double + 1 twin</li>
+              <li>1 bathroom</li>
+              <li>Own kitchen-diner</li>
+              <li>Up to 4 guests</li>
+            </ul>
+            <p class="room-desc">Independent, with its own kitchen: the best choice for longer stays or groups of up to four looking for their own space.</p>
+            <div class="room-price"><span class="label">Rate</span><span class="value">On request</span></div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="room-note">The Apartment doesn't have its own photos yet — we'll add them as soon as they're ready. All other photos are real, taken at Simple Inn.</p>
+  </div>
+</section>
+
+<div class="contour-divider">
+  <svg viewBox="0 0 1200 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,24 C200,6 400,36 600,18 C800,2 1000,32 1200,14" fill="none" stroke="#6E6656" stroke-width="1.4" opacity="0.5"/>
+  </svg>
+</div>
+
+<!-- ============ GALERIA ============ -->
+<section id="galeria">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Gallery</div>
+      <h2>Common areas</h2>
+      <p>The living room, the room hallway, and the keypad entrance — this is what Simple Inn looks like inside.</p>
+    </div>
+    <div class="gallery-grid">
+      <a href="images/lobby_1.jpg" target="_blank" rel="noopener" class="tall">
+        <img src="images/lobby_1.jpg" alt="Living room with sofa and mountain-themed decor at Simple Inn">
+      </a>
+      <a href="images/lobby_4.jpg" target="_blank" rel="noopener" class="wide">
+        <img src="images/lobby_4.jpg" alt="Living room with Los Glaciares National Park maps">
+      </a>
+      <a href="images/cartel.jpg" target="_blank" rel="noopener">
+        <img src="images/cartel.jpg" alt="Wall decor detail with the names El Chaltén, Fitz Roy and Cerro Torre">
+      </a>
+      <a href="images/simple_lobb.jpg" target="_blank" rel="noopener">
+        <img src="images/simple_lobb.jpg" alt="Staircase and living room at Simple Inn">
+      </a>
+      <a href="images/pasillo_simple.jpg" target="_blank" rel="noopener" class="tall">
+        <img src="images/pasillo_simple.jpg" alt="Hallway with numbered rooms at Simple Inn">
+      </a>
+      <a href="images/banos_1.jpg" target="_blank" rel="noopener">
+        <img src="images/banos_1.jpg" alt="Shower with towel warmer in a private bathroom">
+      </a>
+      <a href="images/lobby_3.jpg" target="_blank" rel="noopener" class="wide">
+        <img src="images/lobby_3.jpg" alt="General view of the living room at Simple Inn">
+      </a>
+      <a href="images/lifestyle_lectura.jpg" target="_blank" rel="noopener" class="tall">
+        <img src="images/lifestyle_lectura.jpg" alt="Guest reading on the living room sofa">
+      </a>
+      <a href="images/lifestyle_trabajo.jpg" target="_blank" rel="noopener">
+        <img src="images/lifestyle_trabajo.jpg" alt="Guest working on a laptop in the living room">
+      </a>
+      <a href="images/lifestyle_cafe_cama.jpg" target="_blank" rel="noopener" class="wide">
+        <img src="images/lifestyle_cafe_cama.jpg" alt="Guest having coffee in bed with a view of Fitz Roy">
+      </a>
+      <a href="images/triple_2.jpg" target="_blank" rel="noopener">
+        <img src="images/triple_2.jpg" alt="Triple room, single beds">
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="contour-divider">
+  <svg viewBox="0 0 1200 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,20 C200,4 400,34 600,16 C800,0 1000,30 1200,12" fill="none" stroke="#6E6656" stroke-width="1.4" opacity="0.5"/>
+  </svg>
+</div>
+
+<!-- ============ SERVICIOS ============ -->
+<section class="services" id="servicios">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Amenities</div>
+      <h2>What's included in your stay</h2>
+      <p>A few things, well thought out, so you're not missing anything after a day on the mountain.</p>
+    </div>
+    <div class="services-layout">
+      <div class="services-photo">
+        <img src="images/desayuno_completo.jpg" alt="Breakfast table set at Simple Inn with eggs, homemade bread, yogurt, granola and juice">
+      </div>
+      <div class="service-grid">
+        <div class="service-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12.5a10 10 0 0 1 14 0M8 15.5a6 6 0 0 1 8 0M12 19h.01"/></svg>
+          <h3>WiFi</h3>
+          <p>Available throughout the property.</p>
+        </div>
+        <div class="service-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 13h16l-1 4a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3l-1-4Z"/><path d="M8 13V8a4 4 0 0 1 8 0v5"/></svg>
+          <h3>Breakfast included</h3>
+          <p>Eggs, homemade bread, fruit, yogurt, granola and juice — a good start before heading out to the mountain.</p>
+        </div>
+        <div class="service-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="4"/></svg>
+          <h3>Heating</h3>
+          <p>Warm rooms even on the coldest nights.</p>
+        </div>
+        <div class="service-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9h18M3 9v10a1 1 0 0 0 1 1h4v-5h8v5h4a1 1 0 0 0 1-1V9M8 9V5a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v4"/></svg>
+          <h3>Bed linen &amp; towels</h3>
+          <p>Included, ready for when you arrive.</p>
+        </div>
+        <div class="service-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="2" width="12" height="20" rx="1.5"/><line x1="6" y1="10" x2="18" y2="10"/></svg>
+          <h3>Fridge &amp; electric kettle</h3>
+          <p>Available in the common area for guests staying in the rooms.</p>
+        </div>
+        <div class="service-card" style="grid-column:1 / -1;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="10" rx="1"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1.5"/></svg>
+          <h3>Self check-in</h3>
+          <p>Keypad access at the main door: come in whenever you arrive, no need to wait for a set schedule.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="contour-divider">
+  <svg viewBox="0 0 1200 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,14 C200,32 400,2 600,20 C800,36 1000,6 1200,24" fill="none" stroke="#6E6656" stroke-width="1.4" opacity="0.5"/>
+  </svg>
+</div>
+
+<!-- ============ LOCATION ============ -->
+<section id="ubicacion">
+  <div class="wrap">
+    <div class="location">
+      <div class="location-info">
+        <div class="eyebrow">Location</div>
+        <h2 style="margin-top:10px;">In the heart of El Chaltén</h2>
+        <p>Just a few blocks from the bus terminal and the trailheads to Fitz Roy and Cerro Torre. Easy to find, easy to walk back to.</p>
+        <div class="location-detail">
+          <div><strong>Address</strong>Güemes 17, El Chaltén, Santa Cruz</div>
+          <div><strong>WhatsApp</strong>+54 9 2966 630854</div>
+          <div><strong>Email</strong>simpleinn.elchalten@gmail.com</div>
+        </div>
+        <a class="btn btn-primary" style="margin-top:26px;" href="https://www.google.com/maps/search/?api=1&query=Güemes+17,+El+Chaltén,+Santa+Cruz,+Argentina" target="_blank" rel="noopener">View on Google Maps</a>
+      </div>
+      <div class="map-frame">
+        <iframe
+          src="https://maps.google.com/maps?q=G%C3%BCemes%2017%2C%20El%20Chalt%C3%A9n%2C%20Santa%20Cruz%2C%20Argentina&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          title="Map of Simple Inn, Güemes 17, El Chaltén">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="contour-divider">
+  <svg viewBox="0 0 1200 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,20 C200,4 400,34 600,16 C800,0 1000,30 1200,12" fill="none" stroke="#6E6656" stroke-width="1.4" opacity="0.5"/>
+  </svg>
+</div>
+
+<!-- ============ BOOKING ============ -->
+<section class="reservas" id="reservas">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Booking</div>
+      <h2>Check availability</h2>
+      <p>Fill out the form and it will go straight to WhatsApp or email. We'll get back to you shortly with availability and rates.</p>
+    </div>
+
+    <div class="form-wrap">
+      <form id="reservaForm">
+        <div class="form-grid">
+          <div class="field">
+            <label for="nombre">Name</label>
+            <input type="text" id="nombre" name="nombre" required placeholder="Your name">
+          </div>
+          <div class="field">
+            <label for="telefono">Phone / WhatsApp</label>
+            <input type="tel" id="telefono" name="telefono" required placeholder="Your contact number">
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@email.com">
+          </div>
+          <div class="field">
+            <label for="personas">Number of guests</label>
+            <input type="number" id="personas" name="personas" min="1" max="20" required placeholder="E.g. 2">
+          </div>
+          <div class="field">
+            <label for="checkin">Check-in</label>
+            <input type="date" id="checkin" name="checkin" required>
+          </div>
+          <div class="field">
+            <label for="checkout">Check-out</label>
+            <input type="date" id="checkout" name="checkout" required>
+          </div>
+          <div class="field full">
+            <label for="tipo">Room of interest</label>
+            <select id="tipo" name="tipo">
+              <option value="Economy Double">Economy Double</option>
+              <option value="Twin Room">Twin Room</option>
+              <option value="Standard Double">Standard Double</option>
+              <option value="Triple">Triple</option>
+              <option value="Apartment">Apartment</option>
+              <option value="Not sure / need advice">Not sure / need advice</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="mensaje">Message (optional)</label>
+            <textarea id="mensaje" name="mensaje" rows="3" placeholder="Let us know if you need anything in particular"></textarea>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Send inquiry via WhatsApp</button>
+          <a class="btn btn-ghost" style="border-color:var(--slate); color:var(--ink);" href="mailto:simpleinn.elchalten@gmail.com?subject=Availability%20inquiry%20-%20Simple%20Inn">Or email us</a>
+        </div>
+        <p class="form-hint">When you submit, WhatsApp will open with your inquiry already written — you just need to confirm sending it.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT / FOOTER ============ -->
+<footer id="contacto">
+  <div class="wrap footer-grid">
+    <div>
+      <div class="footer-logo"><img src="images/logo_circular.jpg" alt="Simple Inn"></div>
+      <p style="margin-top:16px; max-width:320px;">A simple place to stay in El Chaltén, Santa Cruz. Eight rooms and an apartment, steps from Patagonia's most beautiful trails.</p>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <p><a href="https://wa.me/5492966630854" target="_blank" rel="noopener">WhatsApp: +54 9 2966 630854</a></p>
+      <p><a href="mailto:simpleinn.elchalten@gmail.com">simpleinn.elchalten@gmail.com</a></p>
+    </div>
+    <div>
+      <h4>Location</h4>
+      <p>Güemes 17<br>El Chaltén, Santa Cruz<br>Argentina</p>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© <span id="year"></span> Simple Inn — El Chaltén</span>
+    <span>All rates on request</span>
+  </div>
+</footer>
+
+<!-- WhatsApp float button -->
+<a class="wa-float" href="https://wa.me/5492966630854" target="_blank" rel="noopener" aria-label="Message us on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11 11 0 0 0 2.6 17L2 22l5.2-.6A11 11 0 1 0 20.5 3.5zM12 20a8 8 0 0 1-4.1-1.1l-.3-.2-3 .3.3-3-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-1.4-.6-2.3-1.4-3.1-2.7-.1-.2-.1-.4.1-.5.2-.2.4-.5.6-.7.1-.1.1-.3 0-.5-.1-.2-.6-1.4-.8-1.9-.1-.4-.3-.3-.5-.3h-.4c-.1 0-.4 0-.6.3-.2.3-.8 1-.8 2.1 0 1.5 1.1 3 1.3 3.2 1.9 2.6 3.9 3.5 6.3 3.9.6.1 1.1 0 1.5-.1.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.1-.2-.2-.4-.3z"/></svg>
+</a>
+
+<script>
+  // Mobile menu toggle
+  const burgerBtn = document.getElementById('burgerBtn');
+  const navLinks = document.getElementById('navLinks');
+  burgerBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // Footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Reservation form -> WhatsApp message
+  document.getElementById('reservaForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const nombre = document.getElementById('nombre').value.trim();
+    const telefono = document.getElementById('telefono').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const personas = document.getElementById('personas').value.trim();
+    const checkin = document.getElementById('checkin').value;
+    const checkout = document.getElementById('checkout').value;
+    const tipo = document.getElementById('tipo').value;
+    const mensaje = document.getElementById('mensaje').value.trim();
+
+    let texto = `Hi! I'd like to check availability at Simple Inn.\n`;
+    texto += `Name: ${nombre}\n`;
+    texto += `Phone: ${telefono}\n`;
+    if(email) texto += `Email: ${email}\n`;
+    texto += `Guests: ${personas}\n`;
+    texto += `Check-in: ${checkin}\n`;
+    texto += `Check-out: ${checkout}\n`;
+    texto += `Room of interest: ${tipo}\n`;
+    if(mensaje) texto += `Message: ${mensaje}\n`;
+
+    const url = `https://wa.me/5492966630854?text=${encodeURIComponent(texto)}`;
+    window.open(url, '_blank');
+  });
+</script>
+
+</body>
+</html>
